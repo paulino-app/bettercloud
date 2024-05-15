@@ -14,6 +14,82 @@ const shuffle = (array: any[]) => {
   }
 };
 
+const isValidPairFlexible = (
+  santaId: number,
+  recipientId: number,
+  memberMap: Map<number, Member>,
+  previousAssignments: PreviousAssignment[],
+  stage: number
+) => {
+  if (santaId === recipientId) return false;
+
+  const santaFamilyId = memberMap.get(santaId)?.familyId ?? null;
+  const recipientFamilyId = memberMap.get(recipientId)?.familyId ?? null;
+
+  if (stage < 2 && santaFamilyId === recipientFamilyId) {
+    return false;
+  }
+
+  if (stage < 3) {
+    const sameFamilyAssignments = previousAssignments.filter(
+      (assignment) =>
+        (assignment.santaId === santaId &&
+          assignment.recipientId === recipientId) ||
+        (assignment.santaId === recipientId &&
+          assignment.recipientId === santaId)
+    );
+
+    if (sameFamilyAssignments.length > 0) return false;
+  }
+
+  return true;
+};
+
+const assignPairsFlexible = (
+  members: Member[],
+  previousAssignments: PreviousAssignment[]
+) => {
+  const memberIds = members.map((member) => member.id);
+  const memberMap = new Map(members.map((member) => [member.id, member]));
+
+  let attempts: number = 0;
+  const maxAttempts: number = 500; // Increased from 100 to 500
+
+  while (attempts < maxAttempts) {
+    shuffle(memberIds);
+    const pairs: { santaId: number; recipientId: number }[] = [];
+
+    let valid: boolean = true;
+    let stage: number = Math.floor(attempts / (maxAttempts / 3));
+
+    for (let i = 0; i < memberIds.length; i++) {
+      const santaId = memberIds[i];
+      const recipientId = memberIds[(i + 1) % memberIds.length];
+
+      if (
+        !isValidPairFlexible(
+          santaId,
+          recipientId,
+          memberMap,
+          previousAssignments,
+          stage
+        )
+      ) {
+        valid = false;
+        break;
+      }
+
+      pairs.push({ santaId, recipientId });
+    }
+
+    if (valid) return pairs;
+
+    attempts++;
+  }
+
+  throw new Error('Failed to assign Secret Santa pairs.');
+};
+
 // Helper function to check if an assignment is valid
 const isValidPair = (
   santaId: number,
@@ -108,7 +184,7 @@ export const assignSecretSanta = async (c: any) => {
       .andWhere('date', '>=', threeYearsAgo.toISOString().split('T')[0])
       .select('date', 'santaId', 'recipientId');
 
-    const pairs = assignPairs(members, previousAssignments);
+    const pairs = assignPairsFlexible(members, previousAssignments);
 
     // Insert pairs into the database
     const currentDate = new Date().toISOString().split('T')[0];
@@ -126,7 +202,8 @@ export const assignSecretSanta = async (c: any) => {
     return c.json({ pairs });
   } catch (error) {
     console.log(error);
-    return c.status(500).json({ message: 'Error fetching data' });
+    c.status = 500;
+    return c.json({ message: 'Error fetching data' });
   }
 };
 

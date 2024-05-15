@@ -7,7 +7,7 @@ import React from "react";
 export function GroupSkeleton(): JSX.Element {
   return (
     <div className="skeleton-loader w-full">
-      <div className="skeleton-box h-[86px] w-full" />
+      <div className="skeleton-box h-[102px] w-full" />
     </div>
   );
 }

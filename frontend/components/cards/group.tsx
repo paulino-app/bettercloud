@@ -71,11 +71,11 @@ const GroupCard: React.FC<any> = ({
 
   return (
     <div
-      className="group relative h-[86px] w-full cursor-pointer rounded-[14px] bg-white px-7 shadow-main-shadow"
+      className="group relative h-[102px] w-full cursor-pointer rounded-[14px] bg-white px-8 shadow-main-shadow"
       onClick={onClick}
     >
       {/* Name */}
-      <div className="w-full pt-4 text-left text-xl text-main-gray md:text-2xl">
+      <div className="w-full pt-[25px] text-left text-xl text-main-gray md:text-2xl">
         {name}
       </div>
 
@@ -108,7 +108,7 @@ interface GroupCardAddProps {
 export const GroupCardAdd: React.FC<GroupCardAddProps> = ({ handleClick }) => {
   return (
     <div
-      className="h-[86px] w-full cursor-pointer rounded-[14px] border-[2px] border-dashed border-main-gray-semi bg-transparent px-7"
+      className="h-[102px] w-full cursor-pointer rounded-[14px] border-[2px] border-dashed border-main-gray-semi bg-transparent px-7"
       onClick={handleClick}
     >
       <div className="flex h-full w-full items-end text-2xl text-main-gray-semi">
