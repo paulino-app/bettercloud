@@ -42,7 +42,7 @@ RAILWAY_MYSQL_PASSWORD=
 RAILWAY_MYSQL_DATABASE=
 ```
 
-4. Run on a development environment
+4. Run on [http://localhost:3010](http://localhost:3010)
 
 ```sh
 bun run dev
@@ -75,7 +75,7 @@ npm install
 NODE_ENV=
 ```
 
-4. Run on development environment
+4. Run on [http://localhost:3020](http://localhost:3020)
 
 ```sh
 npm run start
