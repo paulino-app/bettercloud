@@ -45,7 +45,7 @@ cd frontend
 npm install
 ```
 
-3. Create a `.env` file under the 'frontend' folder: (optional)
+3. Create a `.env` file under the `frontend` folder: (optional)
 
 ```sh
 NODE_ENV=
