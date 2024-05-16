@@ -76,14 +76,15 @@ The backend application is built using Hono.js, TypeScript, Knex, and MySQL, and
 ### Prerequisites
 
 - [Bun](https://bun.sh/docs/installation)
+- [MySQL](https://www.mysql.com/)
+
+### Installation
 
 1. Navigate to the `backend` directory:
 
 ```sh
 cd backend
 ```
-
-### Installation
 
 2. Install dependencies:
 
