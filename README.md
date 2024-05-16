@@ -31,6 +31,8 @@ The frontend application is built using React and Next.js as a framework and run
 - [Node.js](https://nodejs.org/en/download)
 - [npm](https://www.npmjs.com/)
 
+### Installation
+
 1. Navigate to the `frontend` directory:
 
 ```sh
@@ -80,6 +82,8 @@ The backend application is built using Hono.js, TypeScript, Knex, and MySQL, and
 ```sh
 cd backend
 ```
+
+### Installation
 
 2. Install dependencies:
 
